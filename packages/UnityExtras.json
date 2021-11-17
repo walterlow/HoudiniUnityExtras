@@ -1,0 +1,17 @@
+{
+    "path": "$UNITYEXTRAS",
+    "load_package_once": true,
+    "env": [
+        {
+            "UNITYEXTRAS": "$HOUDINI_PACKAGE_PATH/../UnityExtras/"
+        },
+        {
+            "PATH": {
+                "method": "prepend",
+                "value": [
+                    "$UNITYEXTRAS/bin"
+                ]
+            }
+        }
+    ]
+}
