@@ -1,0 +1,59 @@
+<menuDocument>
+  <menu>
+	<subMenu id="unity_extras">
+		<label>Unity</label>
+		<insertAfter>opmenu.saveoptype</insertAfter>
+	    <scriptItem id="save_node_type_and_push_to_unity">	
+      <label>Save Node Type and Push to Unity</label>
+      <context>
+		<expression>
+		<![CDATA[
+node = kwargs["node"]
+
+if node.matchesCurrentDefinition():
+	return False
+
+if not node.isNetwork():
+	return False
+
+hda_def = node.type().definition()
+
+if not hda_def:
+	return False
+	
+options = hda_def.options()
+
+if not options.lockContents():
+	return False
+
+if node.isInsideLockedHDA() and not node.isEditableInsideLockedHDA():
+	return False
+
+if hou.hda.safeguardHDAs():
+	return False
+
+return True
+		]]>
+		</expression>
+      </context>	  
+      <scriptCode>
+<![CDATA[
+import unityextras
+unityextras.save_and_push_to_unity(kwargs)
+]]>
+      </scriptCode>	  
+    </scriptItem>
+	
+	<scriptItem id="set_unity_project_hda_folder">	
+	<label>Set Unity project HDA folder</label>
+		<insertAfter>save_node_type_and_push_to_unity</insertAfter>
+		<scriptCode>
+<![CDATA[
+import unityextras
+unityextras.set_unity_hda_folder(force=True)
+]]>
+		</scriptCode>
+	</scriptItem>	
+	</subMenu>
+  </menu>
+</menuDocument>
